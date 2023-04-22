@@ -4,7 +4,7 @@ import { SearchPanel } from "./SearchPanel";
 import { List } from "./List";
 import qs from 'qs'
 import { cleanObjEmptyKey } from "uitls";
-
+const baseApi = process.env.REACT_APP_BASE_URL
 export const ProjectListScreen = () => {
 
     const [userParameter, setUserParameter]  = useState({
@@ -17,7 +17,7 @@ export const ProjectListScreen = () => {
     const [projectList,setProjectList] = useState([])
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_BASE_URL}/users`).then(async res => {
+        fetch(`${baseApi}/users`).then(async res => {
             if(res.ok){
                 setUserList(await res.json())
             }
@@ -37,6 +37,13 @@ export const ProjectListScreen = () => {
             userParameter={userParameter} 
             setUserParameter={setUserParameter}
             userList={userList}
+
+
+
+
+
+
+
         />
         <List projectList={projectList} userList={userList}/>
     </div>
