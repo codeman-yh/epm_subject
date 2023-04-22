@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React with commit lint
+          Learn React with commit lint{" "}
         </a>
       </header>
     </div>
