@@ -36,15 +36,6 @@ export const ProjectListScreen = () => {
         <SearchPanel 
             userParameter={userParameter} 
             setUserParameter={setUserParameter}
-            userList={userList}
-
-
-
-
-
-
-
-        />
-        <List projectList={projectList} userList={userList}/>
+            userList={userList}/><List projectList={projectList} userList={userList}/>
     </div>
 }
