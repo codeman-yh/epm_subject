@@ -22,7 +22,7 @@ export const List = ({ projectList, userList }: ListProps) => {
             <span>
               (
               {userList.find((user) => user.id === project.personId)?.name ||
-                "xxx"}
+                "xxxx"}
               )
             </span>
           </h3>
