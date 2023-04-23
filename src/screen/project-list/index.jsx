@@ -3,37 +3,37 @@ import qs from "qs";
 import { SearchPanel } from "./SearchPanel";
 import { List } from "./List";
 
-import { cleanObjEmptyKey } from "uitls";
+import { cleanObjEmptyKey, useDebounce, useMount } from "uitls";
 const baseApi = process.env.REACT_APP_BASE_URL;
 export const ProjectListScreen = () => {
   const [userParameter, setUserParameter] = useState({
     name: "",
     personId: "",
   });
-
+  const deBounceuserParam = useDebounce(userParameter,2000)
   const [userList, setUserList] = useState([]);
 
   const [projectList, setProjectList] = useState([]);
 
-  useEffect(() => {
+  useMount(()=>{
     fetch(`${baseApi}/users`).then(async (res) => {
       if (res.ok) {
         setUserList(await res.json());
       }
     });
-  }, []);
+  })
 
   useEffect(() => {
     fetch(
       `${process.env.REACT_APP_BASE_URL}/projects?${qs.stringify(
-        cleanObjEmptyKey(userParameter)
+        cleanObjEmptyKey(deBounceuserParam)
       )}`
     ).then(async (res) => {
       if (res.ok) {
         setProjectList(await res.json());
       }
     });
-  }, [userParameter]);
+  }, [deBounceuserParam]);
 
   return (
     <div>
@@ -42,10 +42,6 @@ export const ProjectListScreen = () => {
         setUserParameter={setUserParameter}
         userList={userList}
       />
-
-
-
-      
       <List projectList={projectList} userList={userList} />
     </div>
   );
