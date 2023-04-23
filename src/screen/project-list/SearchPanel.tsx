@@ -1,4 +1,19 @@
-export const SearchPanel = ({ userParameter, setUserParameter, userList }) => {
+import { User } from "./index";
+
+interface SearchPanelPorps {
+  userParameter: {
+    name: string;
+    personId: string;
+  };
+  userList: User[];
+  setUserParameter: (userParameter: SearchPanelPorps["userParameter"]) => void;
+}
+
+export const SearchPanel = ({
+  userParameter,
+  userList,
+  setUserParameter,
+}: SearchPanelPorps) => {
   return (
     <div>
       <input
