@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-export const isFalsy = (val: any) => (val === 0 ? false : !!!val);
+export const isFalsy = (val: unknown) => (val === 0 ? false : !!!val);
 
 export const cleanObjEmptyKey = (obj: object) => {
   const result = { ...obj };
@@ -18,7 +18,7 @@ export const useMount = (fn: () => void) => {
   useEffect(fn, []);
 };
 
-export const useDebounce = (val: object, delay: number) => {
+export const useDebounce = <T>(val: T, delay: number) => {
   let [debounceVal, setDebounceVal] = useState(val);
   useEffect(() => {
     let timer = setTimeout(() => setDebounceVal(val), delay);
