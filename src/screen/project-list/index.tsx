@@ -10,6 +10,7 @@ const baseApi = process.env.REACT_APP_BASE_URL;
 export interface User {
   id: string;
   name: string;
+  token: string;
 }
 
 export const ProjectListScreen = () => {

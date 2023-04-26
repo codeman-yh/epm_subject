@@ -1,7 +1,7 @@
-import { FormEvent, InputHTMLAttributes } from "react";
-
-const baseApi = process.env.REACT_APP_BASE_URL;
+import { useAuthContext } from "context/AuthContext";
+import { FormEvent } from "react";
 export const LoginScrenn = () => {
+  const { login, user } = useAuthContext();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const username = (event.currentTarget.elements[0] as HTMLInputElement)
@@ -11,22 +11,9 @@ export const LoginScrenn = () => {
     login({ username, password });
   };
 
-  const login = (param: { username: string; password: string }) => {
-    fetch(`${baseApi}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(param),
-    }).then(async (res) => {
-      if (res.status == 200) {
-        console.log("登录成功");
-      }
-    });
-  };
-
   return (
     <div>
+      {user ? <div>{user.name}</div> : null}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">
