@@ -5,7 +5,7 @@ import { List } from "./List";
 
 import { cleanObjEmptyKey, useDebounce, useMount } from "uitls";
 
-const baseApi = process.env.REACT_APP_BASE_URL;
+const baseApi = process.env.REACT_APP_API_URL;
 
 export interface User {
   id: string;
@@ -33,9 +33,7 @@ export const ProjectListScreen = () => {
 
   useEffect(() => {
     fetch(
-      `${process.env.REACT_APP_BASE_URL}/projects?${qs.stringify(
-        cleanObjEmptyKey(deBounceuserParam)
-      )}`
+      `${baseApi}/projects?${qs.stringify(cleanObjEmptyKey(deBounceuserParam))}`
     ).then(async (res) => {
       if (res.ok) {
         setProjectList(await res.json());
