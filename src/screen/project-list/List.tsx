@@ -1,4 +1,6 @@
+import { Table } from "antd";
 import { User } from "./index";
+import type { ColumnsType } from "antd/es/table";
 
 interface Project {
   id: string;
@@ -13,21 +15,32 @@ interface ListProps {
 }
 
 export const List = ({ projectList, userList }: ListProps) => {
+  let columns: ColumnsType<Project> = [
+    {
+      title: "名称",
+      dataIndex: "name",
+      key: "name",
+      sorter: (a, b) => a.name.localeCompare(b.name),
+    },
+    {
+      title: "负责人",
+      key: "id",
+      render(_, project) {
+        return (
+          <span key={project.id}>
+            {userList.find((user) => user.id === project.personId)?.name ||
+              "xxxx"}
+          </span>
+        );
+      },
+    },
+  ];
   return (
-    <ul>
-      {projectList.map((project) => (
-        <li key={project.id}>
-          <h3>
-            {project.name}
-            <span>
-              (
-              {userList.find((user) => user.id === project.personId)?.name ||
-                "xxxx"}
-              )
-            </span>
-          </h3>
-        </li>
-      ))}
-    </ul>
+    <Table
+      columns={columns}
+      dataSource={projectList}
+      pagination={false}
+      rowKey={(record) => record.id}
+    />
   );
 };

@@ -1,3 +1,4 @@
+import { http } from "uitls/http";
 import { User } from "./screen/project-list";
 const localStoreKey = "__auth_provier__token";
 const baseApi = process.env.REACT_APP_API_URL;
@@ -5,6 +6,16 @@ export const getToken = () => window.localStorage.getItem(localStoreKey);
 
 const handleUserResponse = ({ user }: { user: User }) => {
   window.localStorage.setItem(localStoreKey, user.token);
+  return user;
+};
+
+export const bootStapUser = async () => {
+  let user = null;
+  const token = getToken();
+  if (token) {
+    let data = await http("me", { token });
+    user = data.user;
+  }
   return user;
 };
 

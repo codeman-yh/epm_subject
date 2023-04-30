@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import qs from "qs";
 import { SearchPanel } from "./SearchPanel";
 import { List } from "./List";
 
 import { cleanObjEmptyKey, useDebounce, useMount } from "uitls";
+import { useHttp } from "uitls/http";
 
 const baseApi = process.env.REACT_APP_API_URL;
 
@@ -22,23 +22,15 @@ export const ProjectListScreen = () => {
   const [userList, setUserList] = useState([]);
 
   const [projectList, setProjectList] = useState([]);
-
+  const clientHttp = useHttp();
   useMount(() => {
-    fetch(`${baseApi}/users`).then(async (res) => {
-      if (res.ok) {
-        setUserList(await res.json());
-      }
-    });
+    clientHttp("users").then(setUserList);
   });
 
   useEffect(() => {
-    fetch(
-      `${baseApi}/projects?${qs.stringify(cleanObjEmptyKey(deBounceuserParam))}`
-    ).then(async (res) => {
-      if (res.ok) {
-        setProjectList(await res.json());
-      }
-    });
+    clientHttp("projects", { data: cleanObjEmptyKey(deBounceuserParam) }).then(
+      setProjectList
+    );
   }, [deBounceuserParam]);
 
   return (

@@ -1,3 +1,4 @@
+import { Input, Select } from "antd";
 import { User } from "./index";
 
 interface SearchPanelPorps {
@@ -16,25 +17,26 @@ export const SearchPanel = ({
 }: SearchPanelPorps) => {
   return (
     <div>
-      <input
+      <Input
         type="text"
         value={userParameter.name}
         onChange={(env) =>
           setUserParameter({ ...userParameter, name: env.target.value })
         }
       />
-      <select
-        onChange={(env) =>
-          setUserParameter({ ...userParameter, personId: env.target.value })
+      <Select
+        value={userParameter.personId}
+        onChange={(value) =>
+          setUserParameter({ ...userParameter, personId: value })
         }
       >
-        <option value="">负责人</option>
+        <Select.Option value="">负责人</Select.Option>
         {userList.map((user) => (
-          <option key={user.id} value={user.id}>
+          <Select.Option key={user.id} value={user.id}>
             {user.name}
-          </option>
+          </Select.Option>
         ))}
-      </select>
+      </Select>
     </div>
   );
 };

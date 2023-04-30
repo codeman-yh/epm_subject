@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { User } from "screen/project-list";
 import * as auth from "auth-provider";
+import { useMount } from "uitls";
 
 interface authForm {
   username: string;
@@ -21,6 +22,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const register = (user: authForm) => auth.Register(user).then(setUser);
 
   const logout = () => auth.LogOut().then(() => setUser(null));
+
+  useMount(() => {
+    // 函数式消参
+    auth.bootStapUser().then(setUser);
+  });
 
   return (
     <AuthContext.Provider
