@@ -2,19 +2,31 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { useAuthContext } from "context/AuthContext";
 import { ProjectListScreen } from "screen/project-list";
+import { ReactComponent as SoftWareLogo } from "assets/software-logo.svg";
+import { Dropdown, Menu } from "antd";
 
 export const AuthenticatedApp = () => {
-  const { logout } = useAuthContext();
+  const { logout, user } = useAuthContext();
   return (
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <div>logo</div>
+          <SoftWareLogo width={"18rem"} color={"rab(38,132,255)"} />
           <div>项目</div>
           <div>name</div>
         </HeaderLeft>
         <HeaderRight>
-          <button onClick={logout}>登出</button>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item>
+                  <a onClick={logout}>登出</a>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <a onClick={(e) => e.preventDefault()}>hi, {user?.name}</a>
+          </Dropdown>
         </HeaderRight>
       </Header>
       <Main>
@@ -30,7 +42,10 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Header = styled(Row)``;
+const Header = styled(Row)`
+  padding: 3.2rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+`;
 
 const HeaderLeft = styled(Row)``;
 
